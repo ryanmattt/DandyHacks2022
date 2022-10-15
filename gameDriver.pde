@@ -1,11 +1,14 @@
 
+
 public ArrayList<Tile> everyTile = new ArrayList<Tile>();
 public float hexRadius,hexWidth;
 public int hexScreenShift;
 
 public boolean hasRan = false;
 
-
+public int food =20;
+public int dand = 0;
+public int seeds =20;
 
 public void startGame() {
   background(41,	31,	102);
@@ -16,6 +19,7 @@ if (!hasRan)
   hasRan = true;
 }
 drawTiles();
+drawSideboard();
 }
 
 public void setVariables()
@@ -25,36 +29,18 @@ public void setVariables()
   hexScreenShift = (int) displayHeight/70;
 }
 
-ArrayList<Tile> generateTiles(int map_radius) {
-    ArrayList<Tile> tempTileList = new ArrayList<Tile>();
-    for (int q = -map_radius; q <= map_radius; q++) { //magic code 
-      int r1 = max(-map_radius, -q - map_radius);
-      int r2 = min(map_radius, -q + map_radius);
-      for (int r = r1; r <= r2; r++) {
-          tempTileList.add(new Tile(q,r,-q-r,genTerrain()));
-      }
-    }
-    tempTileList.get(0).setXY(displayWidth/2, displayHeight/2);
-    int currQ;
-    int currR;
-    int currS;
-    float sideA;
-    float centerX = tempTileList.get(0).getX();
-    float centerY = tempTileList.get(0).getY();
-    for (int i = 0; i < tempTileList.size(); i++) {
-        currQ = tempTileList.get(i).getQ();
-        currR = tempTileList.get(i).getR();
-        currS = tempTileList.get(i).getS();
-        sideA = sqrt(pow(hexRadius,2)-pow(hexRadius/2,2));
-        if(currQ<=0)
-        tempTileList.get(i).setXY(centerX + (-hexWidth*currS) + (hexWidth*currQ) + (-hexWidth*currR), centerY+(sideA*currS)+(-sideA*currR));
-        else if(currQ>0)
-        tempTileList.get(i).setXY(centerX + (-hexWidth*currS) + (hexWidth*currQ)+currQ*10 + (-hexWidth*currR), centerY+(sideA*currS)+(-sideA*currR));
-    }
 
-    return tempTileList;
-    }
-
+public void drawSideboard()
+{
+  fill(0,0,0);
+  rect(0,0,displayWidth,displayHeight/18);
+  fill(255,255,255);
+  textSize(20);
+  text("Food: " + food, 10, 20);
+  text("Dand: " + dand, 10, 40);
+  text("Seeds: " + seeds, 10, 60);
+  text("Mouse position" + mouseX + " " + mouseY, 200, 20);
+}
 void polygon(float x, float y, float radius, int npoints) {
   float angle = TWO_PI / npoints;
     // System.out.println("x:"+ x + " y:" + y + " radius:" + radius + " npoints:" + npoints);
@@ -63,7 +49,7 @@ void polygon(float x, float y, float radius, int npoints) {
   for (float a = 0; a < TWO_PI; a += angle) {
     float sx = x + cos(a) * radius;
     float sy = y + sin(a) * radius;
-    vertex(sx, sy + hexScreenShift);
+    vertex(sx, sy);
   }
   endShape(CLOSE);
 
@@ -71,31 +57,54 @@ void polygon(float x, float y, float radius, int npoints) {
 void drawTiles()
 {
   // println("Length"+everyTile.size());
+      
+      float tileX = 0;
+      float tileY = 0;
+      textSize(40);
   for (int i = 0; i < everyTile.size(); i++) {
-    polygon(everyTile.get(i).getX(), everyTile.get(i).getY(), hexRadius, 6);
+    tileX = everyTile.get(i).getX();
+    tileY = everyTile.get(i).getY();
+    polygon(tileX,tileY, hexRadius, 6);
+    if(everyTile.get(i).inHitbox(mouseX,mouseY))
+    {println(i);
+
+    fill(255,0,255); }
+    else
+    fill(255,255,255);
+    text(everyTile.get(i).getTerrainName(), tileX, tileY, tileX+200, tileY+40);
 
   }
 }
 
-int genTerrain()
+
+
+
+
+
+ boolean placeBuilding(Building b, Tile t)
 {
-  int rand = (int)random(0,100);
-  if(rand>0 && rand<=15){
-    return 0;
+  if(t.getBuilding() != null)
+  {
+    return false;
   }
-  if(rand>15 && rand<=25){
-    return 1;
+  else if(b.getFoodCost() > food || b.getSeedCost() > seeds)
+  {
+    return false;
   }
-  if(rand>25 && rand<=35){
-    return 2;
+  else if(b.getBuildingType()!=2 && !t.checkAdjacent(2))
+  {
+    return false;
   }
-  if(rand>35 && rand<=55){
-    return 3;
+  else
+  {
+    t.setBuilding(b);
+    food -= b.getFoodCost();
+    seeds -= b.getSeedCost();
+    return true;
   }
-  if(rand>55 && rand<=100){
-    return 4;
-  }
-  else{
-    return 4;
-  }
+
 }
+
+
+
+
