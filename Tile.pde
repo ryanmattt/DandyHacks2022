@@ -4,13 +4,15 @@ class Tile{
     int s;
     float x;
     float y;
+    int terrain;
     building tileBuilding;
     tileTraits tileEffect;
 
-    Tile(int qIn, int rIn, int sIn,int terrainIn){
+    Tile(int qIn, int rIn, int sIn, int terrainIn){
         this.q = qIn;
         this.r = rIn;
         this.s = sIn;
+        this.terrain = terrainIn;
     }
 
     Tile(int qIn, int rIn, int sIn, float xIn, float yIn, building tileBuilding, tileTraits tileEffect){

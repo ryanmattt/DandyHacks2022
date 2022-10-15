@@ -31,8 +31,7 @@ ArrayList<Tile> generateTiles(int map_radius) {
       int r1 = max(-map_radius, -q - map_radius);
       int r2 = min(map_radius, -q + map_radius);
       for (int r = r1; r <= r2; r++) {
-          
-          tempTileList.add(new Tile(q,r,-q-r));
+          tempTileList.add(new Tile(q,r,-q-r,genTerrain()));
       }
     }
     tempTileList.get(0).setXY(displayWidth/2, displayHeight/2);
@@ -50,9 +49,7 @@ ArrayList<Tile> generateTiles(int map_radius) {
         if(currQ<=0)
         tempTileList.get(i).setXY(centerX + (-hexWidth*currS) + (hexWidth*currQ) + (-hexWidth*currR), centerY+(sideA*currS)+(-sideA*currR));
         else if(currQ>0)
-        tempTileList.get(i).setXY(centerX + (-hexWidth*currS) + (hexWidth*currQ+currQ*10) + (-hexWidth*currR), centerY+(sideA*currS)+(-sideA*currR));
-        
-
+        tempTileList.get(i).setXY(centerX + (-hexWidth*currS) + (hexWidth*currQ)+currQ*10 + (-hexWidth*currR), centerY+(sideA*currS)+(-sideA*currR));
     }
 
     return tempTileList;

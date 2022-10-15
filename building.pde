@@ -7,6 +7,7 @@ public class building {
     int seedProd;
     int foodProd;
     int dandProd;
+    int buildingType;
     public String getName(){
         return name;
     };

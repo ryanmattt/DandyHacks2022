@@ -9,7 +9,19 @@ void setup() {
 }
 
 void draw() {
-  // Display the contents of the current screen
+  // Display the contents of thclass Tile{
+    int q;
+    int r;
+    int s;
+    float x;
+    float y;
+    int terrain;
+    building tileBuilding;
+    tileTraits tileEffect;
+
+    Tile(int qIn, int rIn, int sIn,int terrainIn){
+        this.q = qIn;
+        this.r = rIn;e current screen
   if (gameScreen == 0) {
     startScreen();
   } else if (gameScreen == 1) {
