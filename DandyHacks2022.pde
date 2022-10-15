@@ -1,7 +1,10 @@
-int gameScreen = 0;
+int gameScreen = 2;
+PFont f;  
 
 void setup() {
  fullScreen();
+ f = createFont("Arial", 80, true);
+// startButton = loadImage("start.svg");
 }
 
 void draw() {
@@ -11,24 +14,25 @@ void draw() {
   } else if (gameScreen == 1) {
     infoScreen();
   } else if (gameScreen == 2) {
-    gameScreen();
+    startGame();
   }
 }
-
+public class DandyHacks2022 {
 void startScreen() {
-  background(0);
+  // light gray currently
+  background(50);
+  textFont(f, 80);
+  // orange currently
+  fill(204, 102, 0);   
   textAlign(CENTER, CENTER);
-  textSize(128);
-  text("Click to start", width/2, height/2);
+  text("Click to start", width / 2, height / 2);
+
+  // image(startButton, 0, 0, width / 3, height / 7);
 }
 
-void startGame() {
-  if (mouseX > )
-}
+// }
 
 void infoScreen() {
   // codes of game screen
 }
-void gameScreen() {
-  // codes for game over screen
 }

@@ -9,6 +9,7 @@ application.windows64
 application.macosx
 out
 .vscode
+.git
 output
 sketch.properties
 
