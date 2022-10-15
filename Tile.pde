@@ -1,4 +1,4 @@
-public class Tile{
+class Tile{
     int q;
     int r;
     int s;
@@ -7,7 +7,13 @@ public class Tile{
     building tileBuilding;
     tileTraits tileEffect;
 
-    public Tile(int qIn, int rIn, int sIn, float xIn, float yIn, building tileBuilding, tileTraits tileEffect){
+    Tile(int qIn, int rIn, int sIn,int terrainIn){
+        this.q = qIn;
+        this.r = rIn;
+        this.s = sIn;
+    }
+
+    Tile(int qIn, int rIn, int sIn, float xIn, float yIn, building tileBuilding, tileTraits tileEffect){
         this.q = qIn;
         this.r = rIn;
         this.s = sIn;
@@ -20,18 +26,17 @@ public class Tile{
     boolean checkAdjacent(building buildingType){
         //check if there is a building of type buildingType adjacent to this tile
         Tile currTile = this;
-        for(int i =0; i<tileArray.length(); i++)
+        for(int i =0; i<everyTile.size(); i++)
             if(currTile.checkDistance(this)==2 && currTile.getTileBuilding()==buildingType){
                 return true;
             }
-        else{
         return false;
-        }
+    
 
     }
 
-    int checkDistance (Tile tile) {  //check the distance between this tile and tile
-        return sqrt((this.getQ()-tile.getQ())^2+(this.getR()-tile.getR())^2+(this.getS()-tile.getS())^2);
+    float checkDistance (Tile tile) {  //check the distance between this tile and tile
+        return sqrt(pow(this.getQ()-tile.getQ(),2)+pow(this.getR()-tile.getR(),2 )+pow(this.getS()-tile.getS(), 2));
     }
 
     building getTileBuilding(){

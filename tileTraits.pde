@@ -2,7 +2,7 @@ public class tileTraits{
     int traitNum = 0;
     building allowedBuildings;
 
-    public tileTraits(int traitNum, building allowedBuildings){
+    tileTraits(int traitNum, building allowedBuildings){
         this.traitNum = traitNum;
         this.allowedBuildings = allowedBuildings;
     }
@@ -10,8 +10,8 @@ public class tileTraits{
     public int getTraitMultiplier(){
         if(traitNum==0) //Plains
         { return 1; }
-        else if(traitNum==1) //Barren
-        { return 0.5; }
+        else if(traitNum==1) //Ocean
+        { return 0; }
         else if(traitNum==2)
         { return 2; }
         else if(traitNum==3)

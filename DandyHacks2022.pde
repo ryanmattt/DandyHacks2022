@@ -1,5 +1,6 @@
 int gameScreen = 2;
 PFont f;  
+PImage spaceBackground;
 
 void setup() {
  fullScreen();
@@ -17,7 +18,7 @@ void draw() {
     startGame();
   }
 }
-public class DandyHacks2022 {
+
 void startScreen() {
   // light gray currently
   background(50);
@@ -26,7 +27,7 @@ void startScreen() {
   fill(204, 102, 0);   
   textAlign(CENTER, CENTER);
   text("Click to start", width / 2, height / 2);
-
+  
   // image(startButton, 0, 0, width / 3, height / 7);
 }
 
@@ -34,5 +35,4 @@ void startScreen() {
 
 void infoScreen() {
   // codes of game screen
-}
 }
