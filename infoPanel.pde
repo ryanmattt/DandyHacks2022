@@ -14,9 +14,9 @@ rect(displayWidth-seasonPanelWidth, displayHeight*13/18, seasonPanelWidth, seaso
 fill(textColor);
 textAlign(LEFT);
 textSize(paragraphTextSize);
-text("Food: " + food+  " ("+ String.valueOf(foodChange)+")" , displayWidth-textGap, displayHeight*57/72);
-text("Seeds: " + seeds+" ("+ String.valueOf(seedChange)+")", displayWidth-textGap, displayHeight*59/72);
-text("Dandies: " + dand + " ("+ String.valueOf(dandChange)+")", displayWidth-textGap, displayHeight*61/72);
+text("Seeds: " + seeds+" ("+ (seedChange>0 ? "+" + seedChange : seedChange )+") lbs", displayWidth-textGap, displayHeight*57/72);
+text("Food: " + food+  " ("+ (foodChange>0 ? "+" + foodChange : foodChange )+") lbs" , displayWidth-textGap, displayHeight*59/72);
+text("Dandies: " + dand + " ("+ (dandChange>0 ? "+" + dandChange : dandChange )+")", displayWidth-textGap, displayHeight*61/72);
 text("Turn Number: " + turnNum +"/"+numberOfTurns, displayWidth-textGap, displayHeight*63/72);
 getSeason();
 text("Season: " + currentSeasonArray[0] + " " + currentSeasonArray[1], displayWidth-textGap, displayHeight*65/72);

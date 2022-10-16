@@ -31,10 +31,10 @@ PImage gameBackground;
         foodProd = foodProdIn; //6
         dandProd = dandProdIn; //7
         buildingType = buildingTypeIn; //8 */
-Building baseMother = new Building(-40, -30, 0, 15, 15, 0, 0, 0);
-Building baseGarden = new Building(15, 0, 0, 0, 0, 10, 0, 1);
-Building baseVillage = new Building(30, 20, 0, 15, 10, 0, 0, 2);
-Building baseFactory = new Building(10, 30, 10, 0, 0, 0, 500, 3);
+Building baseMother = new Building(0, 0, 0, 15, 20, 0, 0, 0);
+Building baseGarden = new Building(30, 0, 0, 0, 0, 10, 0, 1);
+Building baseVillage = new Building(30, 40, 0, 15, 30, 0, 0, 2);
+Building baseFactory = new Building(15, 30, 10, 0, 0, 0, 500, 3);
  
 public void startGame() {
 if (!hasRan) {
@@ -292,8 +292,8 @@ void setSeasonBackground()
 {
   if(turnNum%4 == 0) backgroundColor = color(31,	93,	102, 1);
   else if(turnNum%4 == 1) backgroundColor = color(41,	31,	102, 1);
-  else if(turnNum%4 == 2) backgroundColor = color(31,	47,	102, 1);
-  else if(turnNum%4 == 3) backgroundColor = color(102,	31,	35, 1);
+  else if(turnNum%4 == 2) backgroundColor = color(102,	31,	35, 1);
+  else if(turnNum%4 == 3) backgroundColor = color(31,	47,	102, 1);
 
   // if(turnNum%4 == 0) gameBackground = winter;
   // else if(turnNum%4 == 1) gameBackground = spring;
