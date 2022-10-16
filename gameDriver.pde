@@ -303,7 +303,7 @@ void setSeasonBackground()
 
 void loadGameImages()
 {
-    win = loadImage("assets/Win.png");
-    survive = loadImage("assets/Survived.png");
-    loss = loadImage("assets/Loss.png");
+    win = loadImage("Win.png");
+    survive = loadImage("Survived.png");
+    loss = loadImage("Loss.png");
 }
