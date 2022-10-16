@@ -6,14 +6,14 @@ boolean initialBuildingBar = false;
 void drawBar() {
     if(!initialBuildingBar)  {
         initialBuildingBar = true;
-    barWidth = displayWidth*1/10;
+    barWidth = displayWidth*3/20;
     barHeight = displayHeight*3/6;
-    sqWH = displayHeight*1/9;
-    buildingsOnPanel[0] = new Squares(barWidth/6, barHeight/1.6, sqWH, baseGarden);
-    buildingsOnPanel[1] = new Squares(barWidth/6, barHeight/1.1, sqWH, baseVillage);
-    buildingsOnPanel[2] = new Squares(barWidth/6, barHeight/0.84, sqWH, baseFactory);
+    sqWH = displayHeight*9/72;
+    buildingsOnPanel[0] = new Squares(barWidth/2-sqWH/2, barHeight/1.6, sqWH, baseGarden);
+    buildingsOnPanel[1] = new Squares(barWidth/2-sqWH/2, barHeight/1.1, sqWH, baseVillage);
+    buildingsOnPanel[2] = new Squares(barWidth/2-sqWH/2, barHeight/0.84, sqWH, baseFactory);
     }
-    fill(255, 255, 255);
+    fill(panelColor);
     rect(0, displayHeight/4, barWidth, barHeight, 0, 20, 20, 0);
 
     for(int i = 0; i < buildingsOnPanel.length; i++) {
@@ -25,7 +25,7 @@ void drawBar() {
     // square color
     // example squares
     textFont(fb, titleTextSize);
-    fill(0, 0, 0);
+    fill(textColor);
     textAlign(CENTER, CENTER);
     text("Buildings", barWidth/2, barHeight/1.8);
 }

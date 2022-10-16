@@ -6,11 +6,12 @@ public int hexScreenShift;
 public boolean runDrawBackAndTiles= false;
 public boolean hasRan = false;
 
-public int food =9999;
+public int food = 50;
 public int dand = 0;
-public int seeds =9999;
+public int seeds = 50;
 public int turnNum = 0;
-public int numberOfTurns = 25;
+public int numberOfTurns = 13;
+public int dandiesToWin = 5000;
 Tile currentHover = null;
 Building currentHoverBuilding = null;
 public int currentHoverBuildingIndex = -1;
@@ -32,15 +33,17 @@ Building baseFactory = new Building(10, 30, 10, 0, 0, 0, 500, 3);
  
 public void startGame() {
 if (!hasRan) {
+  loadGameImages();
   clear();
   background(41,	31,	102);
   gameBackground=spring;
- setVariables();
+  setVariables();
   everyTile = generateTiles(3);
   hasRan = true;
   drawTiles();
    drawBackAndTiles();
 }
+renderTopLeftQuit();
 drawNextTurnButton();
 if(currentBuilding != null || runDrawBackAndTiles) drawBackAndTiles();
 checkCurrTile();
@@ -134,7 +137,6 @@ void updateBoard()
     }
     }
 
-
 }
 
 void checkCurrTile()
@@ -177,7 +179,7 @@ void setTerrainTextureAndLocation(Tile t)
 
 
 public void drawNextTurnButton() {
-  float pointX = buttonWidth*2/9;
+  float pointX = displayWidth/200;
   float pointY = displayHeight-displayHeight*3/20;
 
   if(checkButtons(pointX, pointY, buttonWidth, buttonHeight))
@@ -262,16 +264,28 @@ void followMouse(){
 }
 
 void calculateWinLose(){
-  if(turnNum == numberOfTurns){
-    if(food < 0 || seeds < 0) lost = true;
+    if(food < 0 || seeds < 0) {
+      lost = true;
       gameScreen = 3;
   }
 }
 
 void setSeasonBackground()
 {
-  if(turnNum%4 == 0) gameBackground = winter;
-  else if(turnNum%4 == 1) gameBackground = spring;
-  else if(turnNum%4 == 2) gameBackground = summer;
-  else if(turnNum%4 == 3) gameBackground = fall;
+  if(turnNum%4 == 0) backgroundColor = color(31,	93,	102, 1);
+  else if(turnNum%4 == 1) backgroundColor = color(41,	31,	102, 1);
+  else if(turnNum%4 == 2) backgroundColor = color(31,	47,	102, 1);
+  else if(turnNum%4 == 3) backgroundColor = color(102,	31,	35, 1);
+
+  // if(turnNum%4 == 0) gameBackground = winter;
+  // else if(turnNum%4 == 1) gameBackground = spring;
+  // else if(turnNum%4 == 2) gameBackground = summer;
+  // else if(turnNum%4 == 3) gameBackground = fall;
+}
+
+void loadGameImages()
+{
+    win = loadImage("assets/Win.png");
+    survive = loadImage("assets/Survived.png");
+    loss = loadImage("assets/Loss.png");
 }

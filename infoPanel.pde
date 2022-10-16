@@ -7,11 +7,11 @@ float textGap;
 String currentSeasonArray[] = {};
 void drawInfoPanel() {
 if(!infoRan) infoPaneStart();
-fill(255,255,255);
+fill(panelColor);
 rect(displayWidth-infoPanelWidth, displayHeight*1/9, infoPanelWidth, infoPanelHeight, 20,0,0,20);
 rect(displayWidth-seasonPanelWidth, displayHeight*13/18, seasonPanelWidth, seasonPanelHeight, 20, 0, 0, 20);
 
-fill(0,0,0);
+fill(textColor);
 textAlign(LEFT);
 textSize(paragraphTextSize);
 text("Food: " + food+" lbs", displayWidth-textGap, displayHeight*57/72);
@@ -35,14 +35,14 @@ if(t!=null)
 {
 int[] tileEffects = t.getTerrainMultiplier();
 textSize(paragraphTextSize);
-fill(0,0,0);
+fill(textColor);
 textAlign(CENTER);
 text(getFlavorText(t), displayWidth-textGap/2, displayHeight*(currentPosition+=1)/72);
 textAlign(LEFT);
 text("Garden: " + tileEffects[1] + "x Production", displayWidth-textGap, displayHeight*(currentPosition+=3)/72);
 text("Village: " + tileEffects[2] + "x Production", displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
 text("Factory: " + tileEffects[3] + "x Production", displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
-fill(255,255,255);
+fill(panelColor);
 textSize(titleTextSize);
 textAlign(CENTER);
 if(t.getBuilding() != null) { 
@@ -51,7 +51,7 @@ Building building = t.getBuilding();
     // for the lited building (using inline logical statements)
     textSize(titleTextSize);
     textAlign(CENTER);
-    fill(0,0,0);
+    fill(textColor);
     text(building.getBuildingName(), displayWidth-infoPanelWidth/2, displayHeight*(currentPosition+=3)/72);
     textAlign(LEFT);
     textSize(paragraphTextSize);
@@ -82,6 +82,7 @@ Building building = t.getBuilding();
 // foodProd = foodProdIn;
 // dandProd = dandProdIn;
 void updateInfoB(Squares s) {
+    fill(textColor);
     if(s!=null) {
     Building building = s.getBuilding();
     currentTitle= s.getBuilding().getBuildingName();
