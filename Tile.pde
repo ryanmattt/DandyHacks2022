@@ -83,7 +83,7 @@ class Tile{
        
     }
 
-    boolean isInsideTriangle(double aX, double aY, 
+boolean isInsideTriangle(double aX, double aY, 
   double bX, double bY, 
   double cX, double cY, 
   double pX, double pY) {
@@ -122,6 +122,11 @@ class Tile{
 
     void setBuilding(Building inputType){
         tileBuilding = inputType;
+    }
+
+    int getTerrain()
+    {
+        return this.terrainNum;
     }
 
     public int[]  getTerrainMultiplier(int terrainNum){
@@ -189,10 +194,18 @@ public class Building {
 
     int getSeedCost(){ return seedCost; }
     int getFoodCost(){ return foodCost; }
+    int getSeedUpkeep(){ return seedUpkeep; }
+    int getFoodUpkeep(){ return foodUpkeep; }
+    int getSeedProd(){ return seedProd; }
+    int getFoodProd(){ return foodProd; }
+    int getDandProd(){ return dandProd; }
     int getBuildingType(){ return buildingType; }
+    
+    String getName(int buildingType){
+        return name;
+    }
 
-    Building(String nameIn, int seedCostIn, int foodCostIn, int seedUpkeepIn, int foodUpkeepIn, int seedProdIn, int foodProdIn, int dandProdIn, int buildingTypeIn){
-        name = nameIn;
+    Building(int seedCostIn, int foodCostIn, int seedUpkeepIn, int foodUpkeepIn, int seedProdIn, int foodProdIn, int dandProdIn, int buildingTypeIn){
         seedCost = seedCostIn;
         foodCost = foodCostIn;
         seedUpkeep = seedUpkeepIn;
@@ -201,7 +214,17 @@ public class Building {
         foodProd = foodProdIn;
         dandProd = dandProdIn;
         buildingType = buildingTypeIn;
-    }
 
+        if(buildingType == 0) { name = "Motherball"; }
+        else if(buildingType == 1) { name = "Garden"; }
+        else if(buildingType == 2) { name = "Village"; }
+        else if(buildingType == 3) { name = "Dandie Factory"; }
+    }
+    
+
+    Building buildCopy ()
+    {
+        return new Building(seedCost, foodCost, seedUpkeep, foodUpkeep, seedProd, foodProd, dandProd, buildingType);
+    }
 
 }

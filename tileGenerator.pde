@@ -33,16 +33,16 @@ ArrayList<Tile> generateTiles(int map_radius) {
 int genTerrain()
 {
   int rand = (int) random(0,100);
-  if(rand>0 && rand<=15){
+  if(rand>0 && rand<=19){
     return 0;
   }
-  if(rand>15 && rand<=25){
+  if(rand>19 && rand<=31){
     return 1;
   }
-  if(rand>25 && rand<=35){
+  if(rand>31 && rand<=43){
     return 2;
   }
-  if(rand>35 && rand<=55){
+  if(rand>43 && rand<=55){
     return 3;
   }
   if(rand>55 && rand<=100){
