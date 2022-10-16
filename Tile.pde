@@ -40,9 +40,9 @@ class Tile{
         { if(everyTile.get(i).tileBuilding!=null)
         {
             currTile=everyTile.get(i);
-            println("checking tile: " + i + " buildingType: " + currTile.getBuilding().getBuildingType()+ " distance from origin:" + checkDistance(currTile));
+            // println("checking tile: " + i + " buildingType: " + currTile.getBuilding().getBuildingType()+ " distance from origin:" + checkDistance(currTile));
             if(checkDistance(currTile)== 1.0 && currTile.getBuilding().getBuildingType()==buildingType){
-                println("found adjacent building");
+                // println("found adjacent building");
                 return true;
             }
         }

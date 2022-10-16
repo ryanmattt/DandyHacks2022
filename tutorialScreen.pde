@@ -17,7 +17,7 @@ public void drawContinueButton() {
 }
 
 public void infoScreenStartUp() {
-    infoHasStarted=!infoHasStarted;
+    infoHasStarted=true;
     float imgHeight = displayWidth*9/16;
     background(backgroundColor);
     image(tutorial, 0, displayHeight-imgHeight, displayWidth, imgHeight);

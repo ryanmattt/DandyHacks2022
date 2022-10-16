@@ -11,7 +11,12 @@ public int dand = 0;
 public int seeds = 50;
 public int turnNum = 0;
 public int numberOfTurns = 13;
-public int dandiesToWin = 5000;
+public int dandiesToWin = 25000;
+
+public int seedChange = 0;
+public int dandChange = 0;
+public int foodChange = 0;
+
 Tile currentHover = null;
 Building currentHoverBuilding = null;
 public int currentHoverBuildingIndex = -1;
@@ -35,13 +40,13 @@ public void startGame() {
 if (!hasRan) {
   loadGameImages();
   clear();
-  background(41,	31,	102);
-  gameBackground=spring;
+  background(backgroundColor);
   setVariables();
   everyTile = generateTiles(3);
   hasRan = true;
   drawTiles();
    drawBackAndTiles();
+
 }
 renderTopLeftQuit();
 drawNextTurnButton();
@@ -54,13 +59,14 @@ updateInfo(currentHover);
 if(currentHoverBuildingIndex!=-1) updateInfoB(buildingsOnPanel[currentHoverBuildingIndex]);
 updateBoard();
 followMouse();
+
 }
 
 void drawBackAndTiles()
 {
   // image(gameBackground, -2,-2, displayHeight*16/9,displayHeight);
   clear();
-  background(41,	31,	102);
+  background(backgroundColor);
   drawTiles();
   runDrawBackAndTiles = false;
 }
@@ -192,26 +198,26 @@ public void drawNextTurnButton() {
 {
   if(t.getBuilding() != null)
   {
-    println("building  is null");
+    // println("building  is null");
     currentBuilding = null;
     return false;
   }
-  else if(b.getFoodCost() > food && b.getSeedCost() > seeds)
+  else if(b.getFoodCost() > food || b.getSeedCost() > seeds)
   {
-        println("not enough resources");
+        // println("not enough resources");
     currentBuilding = null;
     return false;
 
   }
   else if(t.getTerrain()==0)
   {
-    println("can't build on water");
+    // println("can't build on water");
     currentBuilding = null;
     return false;
   }
   else if((b.getBuildingType()!=2) && (!t.checkAdjacent(2) && !t.checkAdjacent(0)))
   {
-    println("is a village and isn't adjacent to a village");
+    // println("is a village and isn't adjacent to a village");
     currentBuilding = null;
     return false;
   }
@@ -222,6 +228,8 @@ public void drawNextTurnButton() {
     seeds -= b.getSeedCost();
     currentBuilding = null;
     polygon(t.getX(),t.getY(),hexRadius,6,null,b.getBuildingImage());
+    updateTotals();
+    drawInfoPanel();
     return true;
   }
 
@@ -236,6 +244,17 @@ void nextTurn(){
 
 void calculateTotals()
 {
+  food += foodChange;
+  seeds += seedChange;
+  dand += dandChange;
+  
+}
+
+void updateTotals()
+{
+  foodChange = 0;
+  seedChange = 0;
+  dandChange = 0;
   for (int i = 0; i < everyTile.size(); i++)
   {
     Tile tile = everyTile.get(i);
@@ -245,11 +264,9 @@ void calculateTotals()
     int buildingNum = tile.getBuilding().getBuildingType();
     if(buildingNum != -1)
     {
-      food += building.getFoodProd() * tile.getTerrainMultiplier()[buildingNum];
-      seeds += building.getSeedProd() * tile.getTerrainMultiplier()[buildingNum];
-      dand += building.getDandProd() * tile.getTerrainMultiplier()[buildingNum]; 
-      food -= building.getFoodUpkeep();
-      seeds -= building.getSeedUpkeep();
+      foodChange += (building.getFoodProd() * tile.getTerrainMultiplier()[buildingNum]) - building.getFoodUpkeep();
+      seedChange += (building.getSeedProd() * tile.getTerrainMultiplier()[buildingNum]) - building.getSeedUpkeep();
+      dandChange += (building.getDandProd() * tile.getTerrainMultiplier()[buildingNum]); 
 
     }
   }
@@ -268,6 +285,7 @@ void calculateWinLose(){
       lost = true;
       gameScreen = 3;
   }
+  if(turnNum==numberOfTurns) gameScreen = 3;
 }
 
 void setSeasonBackground()

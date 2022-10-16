@@ -14,9 +14,9 @@ rect(displayWidth-seasonPanelWidth, displayHeight*13/18, seasonPanelWidth, seaso
 fill(textColor);
 textAlign(LEFT);
 textSize(paragraphTextSize);
-text("Food: " + food+" lbs", displayWidth-textGap, displayHeight*57/72);
-text("Seeds: " + seeds +" lbs", displayWidth-textGap, displayHeight*59/72);
-text("Dandies: " + dand, displayWidth-textGap, displayHeight*61/72);
+text("Food: " + food+  " ("+ String.valueOf(foodChange)+")" , displayWidth-textGap, displayHeight*57/72);
+text("Seeds: " + seeds+" ("+ String.valueOf(seedChange)+")", displayWidth-textGap, displayHeight*59/72);
+text("Dandies: " + dand + " ("+ String.valueOf(dandChange)+")", displayWidth-textGap, displayHeight*61/72);
 text("Turn Number: " + turnNum +"/"+numberOfTurns, displayWidth-textGap, displayHeight*63/72);
 getSeason();
 text("Season: " + currentSeasonArray[0] + " " + currentSeasonArray[1], displayWidth-textGap, displayHeight*65/72);
@@ -65,7 +65,7 @@ Building building = t.getBuilding();
     if(building.getFoodProd()!=0)
     text("Food gained per Turn: " + building.getFoodProd() + (tileEffects[building.getBuildingType()] == 1 ? "" : " (x" + tileEffects[building.getBuildingType()] + ")"), displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
     if(building.getDandProd()!=0)
-    text("Dandies per Turn: " + building.getDandProd() + (tileEffects[building.getBuildingType()] == 1 ? "" : " (x" + tileEffects[building.getBuildingType()] + ")")    , displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
+    text("Golden Dandies per Turn: " + building.getDandProd() + (tileEffects[building.getBuildingType()] == 1 ? "" : " (x" + tileEffects[building.getBuildingType()] + ")")    , displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
     
     
 }
@@ -91,9 +91,9 @@ void updateInfoB(Squares s) {
     textAlign(LEFT);
     textSize(paragraphTextSize);
     if(building.getSeedCost()!=0)
-    text("Seed cost to build: " + building.getSeedUpkeep(), displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
+    text("Seed cost to build: " + building.getSeedCost(), displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
     if(building.getFoodCost()!=0)
-    text("Food cost to build: " + building.getSeedUpkeep(), displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
+    text("Food cost to build: " + building.getFoodCost(), displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
     if(building.getSeedUpkeep()!=0)
     text("Seed cost per Turn: " + building.getSeedUpkeep(), displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
     if(building.getFoodUpkeep()!=0)
@@ -103,12 +103,12 @@ void updateInfoB(Squares s) {
     if(building.getFoodProd()!=0)
     text("Food gained per Turn: " + building.getFoodProd(), displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
     if(building.getDandProd()!=0)
-    text("Dandies per Turn: " + building.getDandProd(), displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
+    text("Golden Dandies per Turn: " + building.getDandProd(), displayWidth-textGap, displayHeight*(currentPosition+=2)/72);
 }}
 
 void infoPaneStart()
 {
-    
+    updateTotals();
     infoRan=true;
 infoPanelWidth=displayWidth*5.5/26.5;
 infoPanelHeight=displayHeight*5/9;
