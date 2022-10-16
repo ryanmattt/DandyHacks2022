@@ -24,7 +24,7 @@ void drawBar() {
     //sidebar
     // square color
     // example squares
-    textFont(fb, paragraphTextSize);
+    textFont(fb, titleTextSize);
     fill(0, 0, 0);
     textAlign(CENTER, CENTER);
     text("Buildings", barWidth/2, barHeight/1.8);

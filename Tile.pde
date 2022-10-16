@@ -35,10 +35,19 @@ class Tile{
     boolean checkAdjacent(int buildingType){
         //check if there is a building of type buildingType adjacent to this tile
         Tile currTile = this;
-        for(int i =0; i<everyTile.size(); i++)
-            if(currTile.checkDistance(this)==2 && currTile.getBuilding().getBuildingType()==buildingType){
+                println();
+        for(int i = 0; i<everyTile.size(); i++)
+        { if(everyTile.get(i).tileBuilding!=null)
+        {
+            currTile=everyTile.get(i);
+            println("checking tile: " + i + " buildingType: " + currTile.getBuilding().getBuildingType()+ " distance from origin:" + checkDistance(currTile));
+            if(checkDistance(currTile)== 1.0 && currTile.getBuilding().getBuildingType()==buildingType){
+                println("found adjacent building");
                 return true;
             }
+        }
+        }
+        println();
         return false;
     
 
@@ -118,7 +127,7 @@ boolean isInsideTriangle(double aX, double aY,
 }
 
     float checkDistance (Tile tile) {  //check the distance between this tile and tile
-        return sqrt(pow(this.getQ()-tile.getQ(),2)+pow(this.getR()-tile.getR(),2 )+pow(this.getS()-tile.getS(), 2));
+        return (abs(this.getQ()-tile.getQ())+abs(this.getR()-tile.getR())+abs(this.getS()-tile.getS()))/2;
     }
     Building getBuilding(){
         return tileBuilding;
@@ -165,7 +174,7 @@ boolean isInsideTriangle(double aX, double aY,
         if(terrainNum == 0) 
         { return "Ocean"; }
         else if(terrainNum==1) 
-        { return "Fields"; }
+        { return "Lush Fields"; }
         else if(terrainNum==2) 
         { return "Forest"; }
         else if(terrainNum==3) 

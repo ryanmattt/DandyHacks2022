@@ -2,6 +2,8 @@ int gameScreen = 2;
 PFont f, fb;  
 PImage startBackground;
 PImage ball, background, title, startButton, quitButton, startButtonTint, quitButtonTint, waterTexture, forestTexture, lushTexture, mountainTexture, plainsTexture, motherball, garden, village, factory;
+PImage nextTurn, nextTurnTint, continueButton, continueButtonTint, tutorial;
+PImage spring, summer, fall, winter;
 float buttonHeight= displayHeight/10;
 float buttonWidth = displayWidth/5;
 boolean hasStartRendered = false;
@@ -27,7 +29,15 @@ motherball = loadImage("assets/Motherball.png");
 garden = loadImage("assets/Garden.png");
 village = loadImage("assets/Village.png");
 factory = loadImage("assets/Dandie Factory.png");
-
+nextTurn = loadImage("assets/nextTurnButton.png");
+nextTurnTint = loadImage("assets/nextTurnButtonTint.png");
+continueButton = loadImage("assets/continueButton.png");
+continueButtonTint = loadImage("assets/continueButtonTint.png");
+spring = loadImage("assets/Backgrounds/springBackground.png");
+summer = loadImage("assets/Backgrounds/summerBackground.png");
+fall = loadImage("assets/Backgrounds/fallBackground.png");
+winter = loadImage("assets/Backgrounds/winterBackground.png");
+tutorial = loadImage("assets/howToPlay.png");
 
  buttonHeight= displayHeight/10;
  buttonWidth = displayWidth/5;
@@ -76,13 +86,6 @@ void startScreen() {
 
 
 
-void infoScreen() {
-  textAlign(CENTER, CENTER);
-  textFont(f, 80);
-  fill(204, 102, 0);
-  text("You are a guinea pig voyaging into space after humankind nuked itself, and Earth, into nuclear oblivion. As your motherball lands on an unknown planet it is up to you and your fellow guinea pigs to terraform the planet and build a thriving community. From your small stock of seeds, you will strive to grow your community into a successful colony...", 0, 0);
-}
-
 void mousePressed() {
 if (gameScreen == 0 && checkButtons(displayWidth*11/26.5, displayHeight*1/5, buttonWidth, buttonHeight)) {
     gameScreen = 2;  
@@ -90,6 +93,9 @@ if (gameScreen == 0 && checkButtons(displayWidth*11/26.5, displayHeight*1/5, but
 else if (gameScreen == 0 && checkButtons(displayWidth*19/26.5, displayHeight*1/5, buttonWidth, buttonHeight)) {
     exit();  
     }
+  // else if (gameScreen == 1 && checkButtons(insert when correct)) {
+
+ // }
 else if(gameScreen == 2 && currentHoverBuilding != null) {
   //set building in current square to currentBuilding
   currentBuilding = currentHoverBuilding;
@@ -97,18 +103,16 @@ else if(gameScreen == 2 && currentHoverBuilding != null) {
 else if (gameScreen == 2 && currentBuilding != null && currentHover != null) {
    placeBuilding(currentBuilding, currentHover);
    runDrawBackAndTiles=true;
-
 }
-
 else if (gameScreen == 2 && currentBuilding != null && currentHover == null) {
    currentBuilding = null;
    runDrawBackAndTiles=true;
 }
+else if (gameScreen == 2 && checkButtons(buttonWidth/4, displayHeight-displayHeight*3/20 , buttonWidth, buttonHeight)) {
+    nextTurn();
+    runDrawBackAndTiles=true;
 
-else if (gameScreen == 2 && checkButtons(mouseX, mouseY, nextTurnWidth, nextTurnHeight)) {
-      nextTurn();
 }
-
 }
 
 boolean checkButtons(float x, float y, float w, float h) {
@@ -120,6 +124,7 @@ boolean checkButtons(float x, float y, float w, float h) {
 }
 
 void endScreen() {
+  clear();
   textAlign(CENTER, CENTER);
   textFont(f, 80);
   fill(204, 102, 0);

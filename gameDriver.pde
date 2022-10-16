@@ -10,14 +10,11 @@ public int food =9999;
 public int dand = 0;
 public int seeds =9999;
 public int turnNum = 0;
+public int numberOfTurns = 25;
 Tile currentHover = null;
 Building currentHoverBuilding = null;
 public int currentHoverBuildingIndex = -1;
-float nextTurnWidth=0;
-float nextTurnHeight=0;
-float continueButtonWidth = 0;
-float continueButtonHeight = 0;
-
+PImage gameBackground;
 
 
 /*     seedCost = seedCostIn; //1
@@ -28,34 +25,38 @@ float continueButtonHeight = 0;
         foodProd = foodProdIn; //6
         dandProd = dandProdIn; //7
         buildingType = buildingTypeIn; //8 */
-Building baseMother = new Building(-40, -30, 0, 15, 10, 0, 0, 0);
+Building baseMother = new Building(-40, -30, 0, 15, 15, 0, 0, 0);
 Building baseGarden = new Building(15, 0, 0, 0, 0, 10, 0, 1);
-Building baseVillage = new Building(30, 20, 0, 10, 10, 0, 0, 2);
+Building baseVillage = new Building(30, 20, 0, 15, 10, 0, 0, 2);
 Building baseFactory = new Building(10, 30, 10, 0, 0, 0, 500, 3);
  
 public void startGame() {
-  
 if (!hasRan) {
+  clear();
+  background(41,	31,	102);
+  gameBackground=spring;
  setVariables();
   everyTile = generateTiles(3);
   hasRan = true;
-  background(41,	31,	102);
   drawTiles();
+   drawBackAndTiles();
 }
-if(currentBuilding != null || runDrawBackAndTiles)
-drawBackAndTiles();
-
-updateCurrentTile();
+drawNextTurnButton();
+if(currentBuilding != null || runDrawBackAndTiles) drawBackAndTiles();
+checkCurrTile();
 updateBuilding();
 drawInfoPanel();
 drawBar();
 updateInfo(currentHover);
 if(currentHoverBuildingIndex!=-1) updateInfoB(buildingsOnPanel[currentHoverBuildingIndex]);
+updateBoard();
 followMouse();
 }
 
 void drawBackAndTiles()
 {
+  // image(gameBackground, -2,-2, displayHeight*16/9,displayHeight);
+  clear();
   background(41,	31,	102);
   drawTiles();
   runDrawBackAndTiles = false;
@@ -120,7 +121,7 @@ void drawTiles()
     setTerrainTextureAndLocation(everyTile.get(i));
 }
 
-void updateCurrentTile()
+void updateBoard()
 {
     for (int i = 0; i < everyTile.size(); i++) 
     {
@@ -129,77 +130,92 @@ void updateCurrentTile()
       float coord2 = (float) (currentTile.getY1()+currentTile.getY2())/2;
     if(currentTile.getBuilding()!=null)
     {
-        image(currentTile.getBuilding().getBuildingImage(), currentTile.getX(), currentTile.getY(), 2*hexWidth, 2*hexWidth);
+        image(currentTile.getBuilding().getBuildingImage(), currentTile.getX()-hexWidth*.9, currentTile.getY()-hexWidth*.9, 1.8*hexWidth, 1.8*hexWidth);
     }
-    
-    if(currentTile.inHitbox(mouseX,mouseY))
-      currentHover=everyTile.get(i);
-     
     }
+
+
 }
+
+void checkCurrTile()
+{ 
+  for (int i = 0; i < everyTile.size(); i++) 
+  {
+          Tile currentTile = everyTile.get(i);
+
+  if(currentTile.inHitbox(mouseX,mouseY))
+    {
+      
+      currentHover=everyTile.get(i);
+      break;
+    }
+    else currentHover=null;
+  }
+}
+
 
 void setTerrainTextureAndLocation(Tile t)
 {
   float tileX = t.getX();
   float tileY = t.getY();
-  if(t.getTerrainName() == "Ocean"){
+  if(t.getTerrain() == 0){
     polygon(tileX,tileY, hexRadius, 6, waterTexture, t.getImg());
     }
-    else if(t.getTerrainName() == "Fields"){
+    else if(t.getTerrain() == 1){
     polygon(tileX,tileY, hexRadius, 6, lushTexture, t.getImg());
     }
-    else if(t.getTerrainName() == "Mountain"){
+    else if(t.getTerrain() == 3){
     polygon(tileX,tileY, hexRadius, 6, mountainTexture, t.getImg());
     }
-    else if(t.getTerrainName() == "Forest"){
+    else if(t.getTerrain() == 2){
     polygon(tileX,tileY, hexRadius, 6, forestTexture, t.getImg());
     }
-    else if(t.getTerrainName() == "Plains"){
+    else if(t.getTerrain() == 4){
     polygon(tileX,tileY, hexRadius, 6, plainsTexture, t.getImg());
     }
 }
 
 
-public void drawNextTurn() {
-   nextTurnWidth = displayWidth*1/10;
-   nextTurnHeight = displayHeight*1/8;
-   fill(255, 255, 0);
-  rect(0, displayHeight/1.07, nextTurnWidth, nextTurnHeight, 20, 20, 0, 0);
-  //text("Next Turn", nextturnWidth/2, displayHeight/1.06);
+public void drawNextTurnButton() {
+  float pointX = buttonWidth*2/9;
+  float pointY = displayHeight-displayHeight*3/20;
+
+  if(checkButtons(pointX, pointY, buttonWidth, buttonHeight))
+    image(nextTurnTint, pointX, pointY, buttonWidth, buttonHeight);
+  else
+    image(nextTurn, pointX, pointY, buttonWidth, buttonHeight);
 }
-
-
-public void drawContinueButton() {
-   continueButtonWidth = displayWidth*1/8;
-   continueButtonHeight = displayHeight*1/6;
-   fill(255, 0, 0);
-   rect(displayWidth/2, displayHeight/1.07, nextTurnWidth, nextTurnHeight, 20, 20, 0, 0);
-}
-
 
  boolean placeBuilding(Building b, Tile t)
 {
   if(t.getBuilding() != null)
   {
+    println("building  is null");
     currentBuilding = null;
     return false;
   }
-  else if(b.getFoodCost() > food || b.getSeedCost() > seeds)
+  else if(b.getFoodCost() > food && b.getSeedCost() > seeds)
   {
-    
+        println("not enough resources");
     currentBuilding = null;
     return false;
 
   }
-  else if(b.getBuildingType()!=2 && !t.checkAdjacent(2))
+  else if(t.getTerrain()==0)
   {
+    println("can't build on water");
     currentBuilding = null;
     return false;
-    
+  }
+  else if((b.getBuildingType()!=2) && (!t.checkAdjacent(2) && !t.checkAdjacent(0)))
+  {
+    println("is a village and isn't adjacent to a village");
+    currentBuilding = null;
+    return false;
   }
   else
   {
-    t.setBuilding(b);
+    t.setBuilding(b.buildCopy());
     food -= b.getFoodCost();
     seeds -= b.getSeedCost();
     currentBuilding = null;
@@ -212,6 +228,7 @@ void nextTurn(){
     calculateTotals();
     calculateWinLose();
     turnNum++;
+    setSeasonBackground();
 
 }
 
@@ -220,7 +237,8 @@ void calculateTotals()
   for (int i = 0; i < everyTile.size(); i++)
   {
     Tile tile = everyTile.get(i);
-
+   if(tile.getBuilding()!=null)
+   {
     Building building = tile.getBuilding();
     int buildingNum = tile.getBuilding().getBuildingType();
     if(buildingNum != -1)
@@ -234,6 +252,7 @@ void calculateTotals()
     }
   }
 }
+}
 
 void followMouse(){
   if(currentBuilding != null){
@@ -243,13 +262,16 @@ void followMouse(){
 }
 
 void calculateWinLose(){
-if(turnNum == 24){
-  if(food < 0 || seeds < 0 || dand < 0){
-    lost = true;
-    gameScreen = 3;
+  if(turnNum == numberOfTurns){
+    if(food < 0 || seeds < 0) lost = true;
+      gameScreen = 3;
   }
-  else {
-    gameScreen = 3;
-  }
-  }
-  }
+}
+
+void setSeasonBackground()
+{
+  if(turnNum%4 == 0) gameBackground = winter;
+  else if(turnNum%4 == 1) gameBackground = spring;
+  else if(turnNum%4 == 2) gameBackground = summer;
+  else if(turnNum%4 == 3) gameBackground = fall;
+}
