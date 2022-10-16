@@ -6,6 +6,9 @@ class Tile{
     float y;
     Building tileBuilding;
     int terrainNum;
+    PImage img;
+    double x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6;
+
 
     Tile(int qIn, int rIn, int sIn, int terrainIn){
         this.q = qIn;
@@ -24,6 +27,10 @@ class Tile{
         this.tileBuilding = tileBuildingIn;
         this.terrainNum = terrainNumIn;
     }
+    
+    PImage getImg(){
+        return img;
+    }
 
     boolean checkAdjacent(int buildingType){
         //check if there is a building of type buildingType adjacent to this tile
@@ -40,18 +47,18 @@ class Tile{
         float r = hexRadius;
         double x0 = (double) x;
         double y0 = (double) y;
-        double x1 = (double) x-r/2;
-        double y1 = (double) y-r*sqrt(3)/2;
-        double x2 = (double) x+r/2;
-        double y2 = (double) y-r*sqrt(3)/2;
-        double x3 = (double) x-r;
-        double y3 = (double) y;
-        double x4 = (double) x+r;
-        double y4 = (double) y;
-        double x5 = (double) x+r/2;
-        double y5 = (double) y+r*sqrt(3)/2;
-        double x6 = (double) x-r/2;
-        double y6 = (double) y+r*sqrt(3)/2;
+        x1 = (double) x-r/2;
+        y1 = (double) y-r*sqrt(3)/2;
+        x2 = (double) x+r/2;
+        y2 = (double) y-r*sqrt(3)/2;
+        x3 = (double) x-r;
+        y3 = (double) y;
+        x4 = (double) x+r;
+        y4 = (double) y;
+        x5 = (double) x+r/2;
+        y5 = (double) y+r*sqrt(3)/2;
+        x6 = (double) x-r/2;
+        y6 = (double) y+r*sqrt(3)/2;
         fill(0,255,255);
         
         if(isInsideTriangle(x1, y1, x2, y2, x0, y0, xIn, yIn)){
@@ -129,26 +136,26 @@ boolean isInsideTriangle(double aX, double aY,
         return this.terrainNum;
     }
 
-    public int[]  getTerrainMultiplier(int terrainNum){
+    public int[]  getTerrainMultiplier(){
         
     //0: Motherball
     //1: Garden
     //2: Village
     //3: Factory
 
-        if(terrainNum == 0) { //Ocean
+        if(this.terrainNum == 0) { //Ocean
             return new int[] {0, 0, 0, 0}; 
         }
-        else if(terrainNum == 1) {  //Fields
+        else if(this.terrainNum == 1) {  //Fields
             return new int[] {1, 2, 1, 1}; 
         }
-        else if(terrainNum == 2) { //Forest
+        else if(this.terrainNum == 2) { //Forest
             return new int[] {2, 1, 2, 1}; 
         }
-        else if(terrainNum == 3) { //Mountain
+        else if(this.terrainNum == 3) { //Mountain
             return new int[] {1, 1, 1, 2}; 
         }
-        else if(terrainNum == 4) {  //Plains
+        else if(this.terrainNum == 4) {  //Plains
             return new int[] {1, 1, 1, 1}; 
         }
         return new int[0];
@@ -176,6 +183,12 @@ boolean isInsideTriangle(double aX, double aY,
     void setX(float xIn){ x = xIn; }
     void setY(float yIn){ y = yIn; }
     void setXY(float xIn, float yIn){ x = xIn; y = yIn; }
+    double getX1(){ return x1; }
+    double getY1(){ return y1; }
+    double getX2(){ return x2; }
+    double getY2(){ return y2; }
+
+
 }
 
 public class Building {
@@ -188,7 +201,7 @@ public class Building {
     int foodProd;
     int dandProd;
     int buildingType;
-    public String getName(){
+    public String getBuildingName(){
         return name;
     };
 
@@ -201,9 +214,6 @@ public class Building {
     int getDandProd(){ return dandProd; }
     int getBuildingType(){ return buildingType; }
     
-    String getName(int buildingType){
-        return name;
-    }
 
     Building(int seedCostIn, int foodCostIn, int seedUpkeepIn, int foodUpkeepIn, int seedProdIn, int foodProdIn, int dandProdIn, int buildingTypeIn){
         seedCost = seedCostIn;
@@ -225,6 +235,14 @@ public class Building {
     Building buildCopy ()
     {
         return new Building(seedCost, foodCost, seedUpkeep, foodUpkeep, seedProd, foodProd, dandProd, buildingType);
+    }
+
+    PImage getBuildingImage(){
+        if(buildingType == 0) { return motherball; }
+        else if(buildingType == 1) { return garden; }
+        else if(buildingType == 2) { return village; }
+        else if(buildingType == 3) { return factory; }
+        return null;
     }
 
 }

@@ -25,7 +25,7 @@ ArrayList<Tile> generateTiles(int map_radius) {
         else if(currQ>0)
         tempTileList.get(i).setXY(centerX + (-hexWidth*currS) + (hexWidth*currQ)+currQ*10 + (-hexWidth*currR), centerY+(sideA*currS)+(-sideA*currR)+ hexScreenShift);
     }
-
+    tempTileList.get(18).setBuilding(baseMother);
     return tempTileList;
     }
 

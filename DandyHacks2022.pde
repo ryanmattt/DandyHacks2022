@@ -1,7 +1,7 @@
 int gameScreen = 2;
 PFont f, fb;  
 PImage startBackground;
-PImage ball, background, title, startButton, quitButton, startButtonTint, quitButtonTint, waterTexture, forestTexture, lushTexture, mountainTexture, plainsTexture;
+PImage ball, background, title, startButton, quitButton, startButtonTint, quitButtonTint, waterTexture, forestTexture, lushTexture, mountainTexture, plainsTexture, motherball, garden, village, factory;
 float buttonHeight= displayHeight/10;
 float buttonWidth = displayWidth/5;
 boolean hasStartRendered = false;
@@ -23,6 +23,12 @@ void setup() {
  lushTexture = loadImage("assets/lushTexture.png");
  mountainTexture = loadImage("assets/mountainTexture.png");
  plainsTexture = loadImage("assets/plainsTexture.png");
+motherball = loadImage("assets/Motherball.png");
+garden = loadImage("assets/Garden.png");
+village = loadImage("assets/Village.png");
+factory = loadImage("assets/Dandie Factory.png");
+
+
  buttonHeight= displayHeight/10;
  buttonWidth = displayWidth/5;
 }
@@ -37,7 +43,7 @@ void draw() {
     startGame();
   }
   else if (gameScreen == 3) {
-    tutorialScreen();
+    endScreen();
   }
 }
 
@@ -84,18 +90,26 @@ if (gameScreen == 0 && checkButtons(displayWidth*11/26.5, displayHeight*1/5, but
 else if (gameScreen == 0 && checkButtons(displayWidth*19/26.5, displayHeight*1/5, buttonWidth, buttonHeight)) {
     exit();  
     }
-// else if(gameScreen == 2 && currentHoverBuilding != null && currentHoverBuilding != currentBuilding) {
-//   //set building in current square to currentBuilding
-//   currentBuilding = currentHoverBuilding;
-// }
-// else if (gameScreen == 2 && currentBuilding != null && currentHover != null) {
-//    placeBuilding(currentBuilding, currentHover);
-// }
-// else if (gameScreen == 2 && checkButtons())
-      // nextTurn();
+else if(gameScreen == 2 && currentHoverBuilding != null) {
+  //set building in current square to currentBuilding
+  currentBuilding = currentHoverBuilding;
+}
+else if (gameScreen == 2 && currentBuilding != null && currentHover != null) {
+   placeBuilding(currentBuilding, currentHover);
+   runDrawBackAndTiles=true;
+
 }
 
+else if (gameScreen == 2 && currentBuilding != null && currentHover == null) {
+   currentBuilding = null;
+   runDrawBackAndTiles=true;
+}
 
+else if (gameScreen == 2 && checkButtons(mouseX, mouseY, nextTurnWidth, nextTurnHeight)) {
+      nextTurn();
+}
+
+}
 
 boolean checkButtons(float x, float y, float w, float h) {
   if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
@@ -105,13 +119,9 @@ boolean checkButtons(float x, float y, float w, float h) {
   }
 }
 
-void tutorialScreen() {
+void endScreen() {
   textAlign(CENTER, CENTER);
   textFont(f, 80);
   fill(204, 102, 0);
   text("In this game, the goal is to win by collecting seeds, food, and special goldenflowers to  build a flourishing community. Collect seeds to grow food and build factories to make goldenflowers! Use your resources to expand across the board while utilizing the space to your advantage. But keep a watch out for environmental risks. ", 0, 0);
-}
-
-void endScreen() {
-
 }
