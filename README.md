@@ -16,3 +16,5 @@ You are the head guinea pig creating your new home after humankind nuked Earth i
 
 ## The Program Itself
 Written entirely in processing. The Linux version definitely works but the Windows version seems to have some issues. It's easier to compile/run from source with Processing.
+
+**UPDATE** [You can now play the game on my website](https://ryanrosenblatt.com/planet-guinea-pig/#game)
